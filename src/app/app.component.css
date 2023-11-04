@@ -1,0 +1,13 @@
+.nombre{
+    text-align: center;
+}
+a {
+    color: #000; /* Color de enlace predeterminado */
+    text-decoration: none; /* Elimina la decoración de subrayado en los enlaces */
+    margin-right: 20px; /* Agrega un margen derecho para separar los enlaces */
+  }
+  
+  a.router-link-active {
+    font-weight: bold; /* Resalta el enlace activo aumentando el grosor del texto */
+    color: #007bff; /* Cambia el color del enlace activo */
+  }

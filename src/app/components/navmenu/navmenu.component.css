@@ -1,0 +1,46 @@
+nav {
+    background-color: #202020; /* Color de fondo del modo oscuro de YouTube */
+    padding: 10px; /* Ajusta el relleno según sea necesario */
+    display: flex;
+    justify-content: space-between; /* Alinea los elementos al principio y al final del contenedor */
+    align-items: center;
+  }
+  
+  .title {
+    padding: 8px 0; /* Ajusta el relleno interno del título */
+    margin-right: 20px; /* Añade un margen derecho para separar el título de los enlaces */
+    font-size: 25px;
+  }
+  
+  .nav-links {
+    display: flex; /* Crea un diseño de línea con los enlaces de navegación */
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-link {
+    color: #909090; /* Color de enlace predeterminado */
+    text-decoration: none; /* Elimina la decoración de subrayado en los enlaces */
+    margin-right: 20px; /* Añade un margen derecho para separar los enlaces */
+    padding: 8px 12px; /* Ajusta el relleno interno de los enlaces */
+    border-radius: 20px; /* Ajusta el radio de la esquina para crear un efecto de botón estilo píldora */
+    
+  }
+  
+  .nav-link:hover {
+    background-color: #404040; /* Color de fondo cuando se pasa el mouse sobre el enlace */
+  }
+  
+  .active-link {
+    color: #ffffff; /* Cambia el color del enlace activo a blanco */
+    font-weight: bold; /* Resalta el enlace activo aumentando el grosor del texto */
+    background-color: #ffffff; /* Cambia el color de fondo del enlace activo a blanco */
+    color: #000000; /* Cambia el color del texto del enlace activo a negro */
+    
+  }
+  
+
+  a:hover{
+    color: #f9f9f9
+  }
+  
