@@ -23,6 +23,7 @@ export class ProductComponent implements OnInit{
   submitted = false;
   submittedU = false;
   product = new Product();
+  originalProduct: Product = new Product();
   
   constructor(private productService: ProductService, private categoryService: CategoryService){}
 
@@ -49,6 +50,8 @@ export class ProductComponent implements OnInit{
       valoracion: new FormControl(this.product.valoracion,Validators.required),
       categoria: new FormControl(this.product.categories,Validators.required)
     });
+
+    
   }
 
   get nombre(){return this.productForm.get('nombre')}
@@ -199,13 +202,18 @@ export class ProductComponent implements OnInit{
   updateProduct(){
     const productoObservable = this.createU();
     if (productoObservable) {
-        this.productService.update(productoObservable,productoObservable.id).subscribe(response => {
-          this.getAll()
-          alert("Modificacion Exitosa")
-          this.productUpdate.reset()
-        }, error => {
-          console.log(error)
-        });
+        if(this.isProductUpdated(productoObservable)){
+          this.productService.update(productoObservable,productoObservable.id).subscribe(response => {
+            this.getAll()
+            alert("Modificacion Exitosa")
+            this.productUpdate.reset()
+            
+          }, error => {
+            console.log(error)
+          });
+        }else{
+          alert("Se requiere que se cambie al menos un campo")
+        }
       
     }
   }
@@ -218,7 +226,33 @@ export class ProductComponent implements OnInit{
       console.log(error)
     } )
   }
-  get nombreNo(){
-    return this.productForm.get('nombre')?.invalid && this.productForm.get('nombre')?.touched;
+
+  isProductUpdated(updatedProduct: Product): boolean {
+    return (updatedProduct.nombre !== this.originalProduct.nombre ||
+      updatedProduct.cantidad !== this.originalProduct.cantidad ||
+      updatedProduct.precio !== this.originalProduct.precio ||
+      updatedProduct.disponible !== this.originalProduct.disponible ||
+      updatedProduct.valoracion !== this.originalProduct.valoracion ||
+      updatedProduct.categories != this.originalProduct.categories)
+  }
+
+  selectProductForUpdate(product: Product) {
+    this.productUpdate.patchValue({
+      id: product.id,
+      nombre: product.nombre,
+      cantidad: product.cantidad,
+      precio: product.precio,
+      disponible: product.disponible ? '1' : '0',
+      valoracion: product.valoracion,
+      categoria: product.categories.length > 0 ? product.categories[0].id : null
+    });
+    this.scrollToForm();
+  }
+
+  scrollToForm() {
+    const formElement = document.getElementById('updateForm');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }

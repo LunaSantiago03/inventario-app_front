@@ -16,6 +16,9 @@ export class ProductService {
   getAll():Observable<any>{
     return this.http.get(this.url)
   }
+  getProductById(id: number): Observable<any> {
+    return this.http.get(`${this.url}/${id}`);
+  }
 
   saveProduct(product:any): Observable<any>{
     return this.http.post(this.url,product)

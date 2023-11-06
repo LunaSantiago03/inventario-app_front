@@ -20,7 +20,7 @@ export class CategoryComponent implements OnInit{
   categoryID: number;
   categoriaForm : FormGroup = new FormGroup({})
   categoriaUpdate: FormGroup = new FormGroup({})
-
+  originalCategory: Category = new Category();
   submitted = false;
   submittedU = false;
   
@@ -74,6 +74,7 @@ export class CategoryComponent implements OnInit{
       alert("Por favor, complete todos los campos requeridos para actualizar");
     }
   }
+
   
 
   getAll(){
@@ -154,20 +155,39 @@ export class CategoryComponent implements OnInit{
   updateCategory(){
     const c = this.createU()
     if(c){
-      this.categoryService.update(c).subscribe(response=>{
-        this.getAll();
-        alert("Se modifico la categoria")
-        this.categoriaUpdate.reset()
-      },error=>{
-        console.log(error)
-      })
+      if(this.isCategoryUpdated(c)){
+        this.categoryService.update(c).subscribe(response=>{
+          this.getAll();
+          alert("Se modifico la categoria")
+          this.categoriaUpdate.reset()
+        },error=>{
+          console.log(error)
+        })
+      }else{
+        alert("Se requiere que se cambie al menos un campo")
+      }
     }
   }
 
-  ha(){
-    
-    alert("hora")
+  isCategoryUpdated(updatedCategory: Category): boolean {
+    return (updatedCategory.nombre !== this.originalCategory.nombre &&
+      updatedCategory.descripcion !== this.originalCategory.descripcion &&
+      updatedCategory.disponible !== this.originalCategory.disponible);
   }
   
-
+  selectCategoryForUpdate(category: Category){
+    this.categoriaUpdate.patchValue({
+      id: category.id,
+      nombre: category.nombre,
+      descripcion: category.descripcion,
+      disponible: category.disponible ? '1' : '0',
+    });
+    this.scrollToForm();
+  }
+  scrollToForm() {
+    const element = document.getElementById('form-container');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }

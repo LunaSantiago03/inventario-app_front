@@ -13,7 +13,7 @@
       </thead>
       
       <tbody>
-          <tr class="table-dark" *ngFor="let category of categoryList">
+          <tr class="table-dark" *ngFor="let category of categoryList" (click)="selectCategoryForUpdate(category)">
               <td class="table-dark">{{category.id}}</td>
               <td class="table-dark">{{category.nombre}}</td>
               <td class="table-dark">{{category.descripcion}}</td>
@@ -107,8 +107,8 @@
 <!-- fin Crear categoria-->
 
 <!-- actualizar categoria-->
-<div class="container-form">
-  <form class="mt-4 needs-validation" [formGroup]="categoriaUpdate" (ngSubmit)="checkFormU();" novalidate>
+<div id="form-container" class="container-form">
+  <form class="mt-4 needs-validation" [formGroup]="categoriaUpdate" (ngSubmit)="checkFormU()" novalidate>
     <h5 class="h5">Formlario de actualizacion</h5>
 
     <div class="row mt-3 mb-4">

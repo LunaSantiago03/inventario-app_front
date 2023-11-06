@@ -35,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="table-dark" *ngFor="let product of productList">
+      <tr class="table-dark" *ngFor="let product of productList" (click)="selectProductForUpdate(product)">
         <td >{{product.id}}</td>
         <td>{{ product.nombre }}</td>
         <td >{{ product.cantidad }}</td>
@@ -135,7 +135,7 @@
 
 <!-- Formulario de actualizacion -->
 <div class="container-form">
-  <form class="mt-4 needs-validation" [formGroup]="productForm" (ngSubmit)="checkFormCompletion();" novalidate>
+  <form id='updateForm' class="mt-4 needs-validation" [formGroup]="productUpdate" (ngSubmit)="checkFormCompletionU();" novalidate>
     <h5 class="h5">Formulario de actualizacion</h5>
 
     <div class="row mt-3 mb-4">
