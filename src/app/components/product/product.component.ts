@@ -228,12 +228,14 @@ export class ProductComponent implements OnInit{
   }
 
   isProductUpdated(updatedProduct: Product): boolean {
+    alert(updatedProduct.nombre)
     return (updatedProduct.nombre !== this.originalProduct.nombre ||
+      
       updatedProduct.cantidad !== this.originalProduct.cantidad ||
       updatedProduct.precio !== this.originalProduct.precio ||
       updatedProduct.disponible !== this.originalProduct.disponible ||
       updatedProduct.valoracion !== this.originalProduct.valoracion ||
-      updatedProduct.categories != this.originalProduct.categories)
+      this.areArraysEqual(updatedProduct.categories, this.originalProduct.categories))
   }
 
   selectProductForUpdate(product: Product) {
@@ -254,5 +256,18 @@ export class ProductComponent implements OnInit{
     if (formElement) {
       formElement.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+  areArraysEqual(arr1: any[], arr2: any[]): boolean {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+    for (let i = 0; i < arr1.length; i++) {
+      const obj1 = arr1[i];
+      const obj2 = arr2[i];
+      if (JSON.stringify(obj1) !== JSON.stringify(obj2)) {
+        return false;
+      }
+    }
+    return true;
   }
 }

@@ -170,8 +170,8 @@ export class CategoryComponent implements OnInit{
   }
 
   isCategoryUpdated(updatedCategory: Category): boolean {
-    return (updatedCategory.nombre !== this.originalCategory.nombre &&
-      updatedCategory.descripcion !== this.originalCategory.descripcion &&
+    return (updatedCategory.nombre !== this.originalCategory.nombre ||
+      updatedCategory.descripcion !== this.originalCategory.descripcion ||
       updatedCategory.disponible !== this.originalCategory.disponible);
   }
   
