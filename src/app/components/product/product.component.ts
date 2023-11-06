@@ -14,6 +14,7 @@ import { Valoracion } from 'src/app/models/valoracion';
 export class ProductComponent implements OnInit{
 
   productList = new Array<Product>()
+  productListU = new Array<Product>()
   categoryList = new Array<Category>();
   productForm: FormGroup = new FormGroup({});
   productForm1: FormGroup = new FormGroup({});
@@ -21,7 +22,7 @@ export class ProductComponent implements OnInit{
   Valoracion = Valoracion;
   submitted = false;
   submittedU = false;
-  
+  product = new Product();
   
   constructor(private productService: ProductService, private categoryService: CategoryService){}
 
@@ -29,27 +30,43 @@ export class ProductComponent implements OnInit{
     this.getAll()
     this.getAllCategories();
     this.productUpdate = new FormGroup({
-      id: new FormControl('', Validators.required),
-      nombre: new FormControl('',Validators.required),
-      cantidad: new FormControl('',Validators.required),
-      precio: new FormControl('',Validators.required),
-      disponible: new FormControl('',Validators.required),
-      valoracion: new FormControl('',Validators.required),
-      categoria: new FormControl('',Validators.required)
+      id: new FormControl(this.product.id, Validators.required),
+      nombre: new FormControl(this.product.nombre,Validators.required),
+      cantidad: new FormControl(this.product.cantidad,Validators.required),
+      precio: new FormControl(this.product.precio,Validators.required),
+      disponible: new FormControl(this.product.disponible,Validators.required),
+      valoracion: new FormControl(this.product.valoracion,Validators.required),
+      categoria: new FormControl(this.product.categories,Validators.required)
     })
     this.productForm1 = new FormGroup({
       valoracion1: new FormControl('')
     })
     this.productForm = new FormGroup({
-      id: new FormControl('', Validators.required),
-      nombre: new FormControl('',Validators.required),
-      cantidad: new FormControl('',Validators.required),
-      precio: new FormControl('',Validators.required),
-      disponible: new FormControl('',Validators.required),
-      valoracion: new FormControl('',Validators.required),
-      categoria: new FormControl('',Validators.required)
+      nombre: new FormControl(this.product.nombre,Validators.required),
+      cantidad: new FormControl(this.product.cantidad,Validators.required),
+      precio: new FormControl(this.product.precio,Validators.required),
+      disponible: new FormControl(this.product.disponible,Validators.required),
+      valoracion: new FormControl(this.product.valoracion,Validators.required),
+      categoria: new FormControl(this.product.categories,Validators.required)
     });
   }
+
+  get nombre(){return this.productForm.get('nombre')}
+  get cantidad(){return this.productForm.get('cantidad')}
+  get precio(){return this.productForm.get('precio')}
+  get disponible(){return this.productForm.get('disponible')}
+  get valoracion(){return this.productForm.get('valoracion')}
+  get categoria(){return this.productForm.get('categoria')}
+
+  //para update
+  get id(){return this.productUpdate.get('id')}
+  get nombreU(){return this.productUpdate.get('nombre')}
+  get cantidadU(){return this.productUpdate.get('cantidad')}
+  get precioU(){return this.productUpdate.get('precio')}
+  get disponibleU(){return this.productUpdate.get('disponible')}
+  get valoracionU(){return this.productUpdate.get('valoracion')}
+  get categoriaU(){return this.productUpdate.get('categoria')}U
+
   checkFormCompletion() {
     this.submitted = true;
     if (this.productForm.valid) {
@@ -71,6 +88,7 @@ export class ProductComponent implements OnInit{
     this.productService.getAll().subscribe(
       response=>{
       this.productList = response
+      this.productListU = response
       console.log(this.productList)
       }, 
     error=>{

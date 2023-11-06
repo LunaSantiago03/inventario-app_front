@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { APP_BOOTSTRAP_LISTENER, Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { ProductDTO } from 'src/app/models/productDTO';
 import { CategoryService } from 'src/app/services/category.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { bootstrapApplication } from '@angular/platform-browser';
 
 
 
@@ -15,31 +16,46 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class CategoryComponent implements OnInit{
   categoryList = new Array<Category>()
   categoryProducts = new Array<ProductDTO>;
+  category = new Category()
   categoryID: number;
   categoriaForm : FormGroup = new FormGroup({})
   categoriaUpdate: FormGroup = new FormGroup({})
+
   submitted = false;
   submittedU = false;
+  
 
   constructor(private categoryService: CategoryService ){}
 
   ngOnInit():void{
     this.getAll()
     this.categoriaUpdate = new FormGroup({
-      id: new FormControl(''),
-      nombre: new FormControl(''),
-      descripcion: new FormControl(''),
-      disponible: new FormControl(''),
+      id: new FormControl(this.category.id, Validators.required),
+      nombre: new FormControl(this.category.nombre, Validators.required),
+      descripcion: new FormControl(this.category.descripcion,Validators.required),
+      disponible: new FormControl(this.category.disponible, Validators.required),
 
     }),
+
     this.categoriaForm = new FormGroup({
-      
-      nombre: new FormControl(''),
-      descripcion: new FormControl(''),
-      disponible: new FormControl(''),
+      nombre: new FormControl(this.category.nombre, Validators.required),
+      descripcion: new FormControl(this.category.descripcion,Validators.required),
+      disponible: new FormControl(this.category.disponible, Validators.required),
 
     })
   }
+
+  get nombre(){ return this.categoriaForm.get('nombre')}
+  get descripcion(){ return this.categoriaForm.get('descripcion')}
+  get disponible(){ return this.categoriaForm.get('disponible')}
+
+  get id(){ return this.categoriaUpdate.get('id')}
+  get nombreU(){ return this.categoriaUpdate.get('nombre') }
+  get descripcionU(){ return this.categoriaUpdate.get('descripcion')}
+  get disponibleU(){ return this.categoriaUpdate.get('disponible')}
+  
+  
+
 
   checkFormC(){
     this.submitted = true;
@@ -52,7 +68,7 @@ export class CategoryComponent implements OnInit{
 
   checkFormU(){
     this.submittedU = true;
-    if(this.categoriaUpdate.valid){
+    if(this.categoriaUpdate.valid ){
       this.updateCategory();
     }else{
       alert("Por favor, complete todos los campos requeridos para actualizar");
@@ -148,6 +164,10 @@ export class CategoryComponent implements OnInit{
     }
   }
 
+  ha(){
+    
+    alert("hora")
+  }
   
 
 }

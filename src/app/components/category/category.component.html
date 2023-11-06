@@ -73,7 +73,9 @@
         <label for="nombre" class="col-2 col-form-label">Nombre:</label>
         <div class="col-8">
           <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre" required>
-          <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched && categoriaForm.invalid">Campo requerido*</small>
+          
+          <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="nombre?.invalid && nombre?.touched && categoriaForm.invalid ">Campo requerido*</small>
+          <!--<p style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="nombre?.touched && nombre?.errors.required ">Campo requerido*</p>-->
         </div>
     </div>
 
@@ -81,7 +83,7 @@
       <label for="descripcion" class="col-2 col-form-label">Descripcion:</label>
       <div class="col-8">
         <input class="form-control" type="text" id="descripcion" formControlName="descripcion" placeholder="Ingrese la descripcion" required>
-        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched && categoriaForm.invalid">Campo requerido*</small>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="descripcion?.invalid && descripcion?.touched && categoriaForm.invalid">Campo requerido*</small>
       </div>
     </div>
 
@@ -93,13 +95,13 @@
           <option [value]="'1'">Activo</option>
           <option [value]="'0'">Inactivo</option>
         </select>
-        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaForm.get('disponible')?.invalid && categoriaForm.get('disponible')?.touched && categoriaForm.invalid">Campo requerido*</small>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="disponible?.invalid && disponible?.touched && categoriaForm.invalid">Campo requerido*</small>
       </div>
     </div>
     <div class="c">
       <button type="submit" class="btn btn-outline-light">Crear</button>
     </div>
-    
+
   </form>
 </div>
 <!-- fin Crear categoria-->
@@ -115,7 +117,8 @@
         <select class="form-select" id="id" formControlName="id" required>
           <option *ngFor="let category of categoryList" [value]="category.id">{{ category.id }}</option>
         </select>
-        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaUpdate.get('id')?.invalid && categoriaUpdate.get('id')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="id?.invalid && id?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+        <!--*ngIf="categoriaUpdate.get('id')?.invalid && categoriaUpdate.get('id')?.touched && categoriaUpdate.invalid"-->
       </div>
     </div>
 
@@ -123,7 +126,7 @@
         <label for="nombre" class="col-2 col-form-label">Nombre:</label>
         <div class="col-8">
           <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre" required>
-          <small  style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaUpdate.get('nombre')?.invalid && categoriaUpdate.get('nombre')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+          <small  style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="nombreU?.invalid && nombreU?.touched && categoriaUpdate.invalid">Campo requerido*</small>
         </div>
     </div>
 
@@ -131,7 +134,7 @@
       <label for="descripcion" class="col-2 col-form-label">Descripcion:</label>
       <div class="col-8">
         <input class="form-control" type="text" id="descripcion" formControlName="descripcion" placeholder="Ingrese la descripcion" required>
-        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaUpdate.get('descripcion')?.invalid && categoriaUpdate.get('descripcion')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="descripcionU?.invalid && descripcionU?.touched && categoriaUpdate.invalid">Campo requerido*</small>
       </div>
     </div>
 
@@ -143,7 +146,7 @@
           <option [value]="'1'">Activo</option>
           <option [value]="'0'">Inactivo</option>
         </select>
-        <small style="color: rgb(255, 0, 0);" class="smal" *ngIf="categoriaUpdate.get('disponible')?.invalid && categoriaUpdate.get('disponible')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+        <small style="color: rgb(255, 0, 0);" class="smal" *ngIf="disponibleU?.invalid && disponibleU?.touched && categoriaUpdate.invalid">Campo requerido*</small>
       </div>
     </div>
     <div class="c">
@@ -153,5 +156,6 @@
   </form>
 </div>
 <!-- fin actualizar categoria-->
-  
+
+
   
