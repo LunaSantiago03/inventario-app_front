@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
 import { Category } from 'src/app/models/category';
-import { Product } from 'src/app/models/product';
 import { ProductDTO } from 'src/app/models/productDTO';
 import { CategoryService } from 'src/app/services/category.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -20,7 +18,6 @@ export class CategoryComponent implements OnInit{
   categoryID: number;
   categoriaForm : FormGroup = new FormGroup({})
   categoriaUpdate: FormGroup = new FormGroup({})
-  update: boolean = false
   submitted = false;
   submittedU = false;
 
@@ -121,6 +118,7 @@ export class CategoryComponent implements OnInit{
       this.categoryService.save(ca).subscribe(response =>{
         this.getAll();
         this.categoriaForm.reset()
+        alert("Creacion exitosa")
       },error=>{
         console.log(error)
       }
@@ -149,5 +147,7 @@ export class CategoryComponent implements OnInit{
       })
     }
   }
+
+  
 
 }

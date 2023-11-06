@@ -1,49 +1,53 @@
+<!-- tabla general -->
 <h3 class="presentacion">Lista de Categorías</h3>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Disponible</th>
-            <th class="accion">Accion</th>
-        </tr>
-    </thead>
-    
-    <tbody>
-        <tr *ngFor="let category of categoryList">
-            <td>{{category.id}}</td>
-            <td>{{category.nombre}}</td>
-            <td>{{category.descripcion}}</td>
-            <td>
-              <span *ngIf="category.disponible === true">Si</span>
-            <span *ngIf="category.disponible === false">No</span>
-            </td>
-            <td class="boton"><button (click)="delete(category.id)">Eliminar</button></td>
-        </tr>
-    </tbody>
-</table>
-
-
-
 <div class="container">
-  <h3 class="productoCategoria">Buscar productos de una categoria</h3>
+  <table class="table table-dark table-hover table table-striped table-bordered">
+      <thead>
+          <tr class="table-dark">
+              <th scope="col">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Disponible</th>
+              <th class="accion">Accion</th>
+          </tr>
+      </thead>
+      
+      <tbody>
+          <tr class="table-dark" *ngFor="let category of categoryList">
+              <td class="table-dark">{{category.id}}</td>
+              <td class="table-dark">{{category.nombre}}</td>
+              <td class="table-dark">{{category.descripcion}}</td>
+              <td class="table-dark">
+                <span *ngIf="category.disponible === true">Si</span>
+                <span *ngIf="category.disponible === false">No</span>
+              </td>
+              <td class="boton"><button type="button" class="btn btn-outline-light" (click)="delete(category.id)">Eliminar</button></td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+<!-- fin tabla -->
+
+<!-- Buscar los productos de una categoria -->
+<div class="container">
+  <h4 class="productoCategoria">Buscar productos de una categoria</h4>
     <div class="input-container">
-      <select class="selectId" [(ngModel)]="categoryID">
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="categoryID">
         <option *ngFor="let category of categoryList" [value]="category.id">{{ category.id }}</option>
       </select>
-      <button (click)="getProductsByCategory(categoryID)">Buscar Productos</button>
+      <button type="button" class="btn btn-outline-light" (click)="getProductsByCategory(categoryID)">Buscar Productos</button>
     </div>
 </div>
-<table>
+<div class="container">
+<table class="table table-dark table-hover table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Disponible</th>
-        <th>Valoración</th>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Disponible</th>
+        <th scope="col">Valoración</th>
       </tr>
     </thead>
     <tbody>
@@ -57,56 +61,97 @@
       </tr>
     </tbody>
   </table>
+</div>
+<!-- fin Buscar los productos de una categoria -->
 
 
-  <h3 class="crear">Cargar nueva categoria</h3>
-  <form [formGroup]="categoriaForm" (ngSubmit)="checkFormC();">
+<!-- Crear categoria-->
+<div class="container-form">
+  <form class="mt-4 needs-validation" [formGroup]="categoriaForm" (ngSubmit)="checkFormC();" novalidate>
+    <h5 class="h5">Formlario de carga</h5>
+    <div class="row mt-3 mb-4" >
+        <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+        <div class="col-8">
+          <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre" required>
+          <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched && categoriaForm.invalid">Campo requerido*</small>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="descripcion" class="col-2 col-form-label">Descripcion:</label>
+      <div class="col-8">
+        <input class="form-control" type="text" id="descripcion" formControlName="descripcion" placeholder="Ingrese la descripcion" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched && categoriaForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-3">
+      <label for="disponible" class="col-2 col-form-label">Disponible:</label>
+      <div class="col-8">
+        <select class="form-select" formControlName="disponible">
+          <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+          <option [value]="'1'">Activo</option>
+          <option [value]="'0'">Inactivo</option>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaForm.get('disponible')?.invalid && categoriaForm.get('disponible')?.touched && categoriaForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+    <div class="c">
+      <button type="submit" class="btn btn-outline-light">Crear</button>
+    </div>
+    
+  </form>
+</div>
+<!-- fin Crear categoria-->
+
+<!-- actualizar categoria-->
+<div class="container-form">
+  <form class="mt-4 needs-validation" [formGroup]="categoriaUpdate" (ngSubmit)="checkFormU();" novalidate>
+    <h5 class="h5">Formlario de actualizacion</h5>
+
+    <div class="row mt-3 mb-4">
+      <label for="id" class="col-2 col-form-label">ID:</label>
+      <div class="col-8">
+        <select class="form-select" id="id" formControlName="id" required>
+          <option *ngFor="let category of categoryList" [value]="category.id">{{ category.id }}</option>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaUpdate.get('id')?.invalid && categoriaUpdate.get('id')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4" >
+        <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+        <div class="col-8">
+          <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre" required>
+          <small  style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaUpdate.get('nombre')?.invalid && categoriaUpdate.get('nombre')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="descripcion" class="col-2 col-form-label">Descripcion:</label>
+      <div class="col-8">
+        <input class="form-control" type="text" id="descripcion" formControlName="descripcion" placeholder="Ingrese la descripcion" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="categoriaUpdate.get('descripcion')?.invalid && categoriaUpdate.get('descripcion')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="disponible" class="col-2 col-form-label">Disponible:</label>
+      <div class="col-8">
+        <select class="form-select" id="disponible" formControlName="disponible">
+          <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+          <option [value]="'1'">Activo</option>
+          <option [value]="'0'">Inactivo</option>
+        </select>
+        <small style="color: rgb(255, 0, 0);" class="smal" *ngIf="categoriaUpdate.get('disponible')?.invalid && categoriaUpdate.get('disponible')?.touched && categoriaUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+    <div class="c">
+      <button type="submit" class="btn btn-outline-light">Guardar</button>
+    </div>
+    
+  </form>
+</div>
+<!-- fin actualizar categoria-->
   
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre" required>
-    <small class="smal" *ngIf="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched && categoriaForm.invalid">Campo requerido*</small>
-
-    <label for="descripcion">Descripcion</label>
-    <input type="text" id="descripcion" formControlName="descripcion" placeholder="Ingrese la descripcion" required>
-    <small class="smal" *ngIf="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched && categoriaForm.invalid">Campo requerido*</small>
-
-    <label for="disponible">Disponible:</label>
-    <select class="form-select" formControlName="disponible">
-      <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-      <option [value]="'1'">Activo</option>
-      <option [value]="'0'">Inactivo</option>
-    </select>
-    <small class="smal" *ngIf="categoriaForm.get('disponible')?.invalid && categoriaForm.get('disponible')?.touched && categoriaForm.invalid">Campo requerido*</small>
-    
-
-    <button type="submit">Guardar</button>
-  </form>
-
-
-
-  <h3 class="actualizar">Actualizar categoria</h3>
-  <form [formGroup]="categoriaUpdate" (ngSubmit)="checkFormU()">
-    <label for="id">ID:</label>
-    <select class="id" id="id" formControlName="id" required>
-      <option *ngFor="let category of categoryList" [value]="category.id">{{ category.id }}</option>
-    </select>
-    <small class="smal" *ngIf="categoriaUpdate.get('id')?.invalid && categoriaUpdate.get('id')?.touched && categoriaForm.invalid">Campo requerido*</small>
-
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" formControlName="nombre" required>
-    <small class="smal" *ngIf="categoriaUpdate.get('nombre')?.invalid && categoriaUpdate.get('nombre')?.touched && categoriaForm.invalid">Campo requerido*</small>
-    
-    <label for="descripcion">Descripcion</label>
-    <input type="text" id="descripcion" formControlName="descripcion" required>
-    <small class="smal" *ngIf="categoriaUpdate.get('descripcion')?.invalid && categoriaUpdate.get('descripcion')?.touched && categoriaForm.invalid">Campo requerido*</small>
-
-    <label for="disponible">Disponible:</label>
-    <select class="form-select" formControlName="disponible">
-      <option [value]="'1'">Activo</option>
-      <option [value]="'0'">Inactivo</option>
-    </select>
-    <small class="smal" *ngIf="categoriaUpdate.get('disponible')?.invalid && categoriaUpdate.get('disponible')?.touched && categoriaForm.invalid">Campo requerido*</small>
-
-    <button type="submit">Guardar</button>
-  </form>
   

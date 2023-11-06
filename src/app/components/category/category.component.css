@@ -1,226 +1,85 @@
 body {
-    background-color: #181818; /* Fondo principal en modo oscuro */
-    color: #f9f9f9; /* Color del texto principal en modo oscuro */
-  }
-  .presentacion{
-    margin-left: 6%;
-    font-size: 23px;
-  }
-  .crear{
-    text-align: center;
-    font-size: 25px;
-    margin-top: 50px;
-  }
-  
+    background-color: #181818; 
+    color: #f9f9f9; 
+}
+.form-select{
+    max-width: 90%;
+    width: 150px;
+    margin-right: 34px;
+    background-color: #181818;
+    color: #f9f9f9;
+}
+.form-select[_ngcontent-ng-c714303078] {
+    max-width: 100%;
+    width: 150px;
+    background-color: #181818;
+    color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+}
+.col-8{
+    display: flex;
+    justify-content: center;
+}
 
-  .form-select{
-    width: 100%;
-    padding: 8px;
+input{
+    background-color: #181818;
+    color: #f9f9f9; 
+}
+.table-dark{
+    --bs-table-color: #fff;
+      --bs-table-bg: #212121;
+      --bs-table-border-color: #ffffff0e;
+      --bs-table-striped-bg: #242424;
+  }
+.input-container{
+    display: flex;
+    justify-content: end;
+    
+}
+.container{
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #333333;
-    background-color: #212121; 
-    color: #f9f9f9;
-  }
-  
-  table {
-    margin: 0 auto;
-    width: 90%;
-    border-collapse: collapse;
     margin-top: 20px;
-    border-radius: 10px; 
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.568);
-
-  }
-  
-  th, td {
-    border: 1px solid #333333; /* Bordes de las celdas en modo oscuro */
-    text-align: left;
-    padding: 8px;
-    color: #f9f9f9; /* Color del texto en modo oscuro */
-    padding: 12px;
+}
+.presentacion{
     text-align: center;
-    
-  }
-  .accion {
-    width: 10%; /* Ajusta el ancho según sea necesario */
-  }
-  
-  .boton {
-    width: 10%; /* Ajusta el ancho según sea necesario */
-  }
-  
-  
-  th {
-    background-color: #282828; /* Encabezados de tabla en modo oscuro */
-    font-size: 20px;
-    text-align: center;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #212121; /* Fondo de filas pares en modo oscuro */
-  }
-  
-  tr:nth-child(odd) {
-    background-color: #242424; /* Fondo de filas impares en modo oscuro */
-  }
-  
-  tr:hover {
-    background-color: #333333; /* Color de fondo al pasar el cursor sobre una fila en modo oscuro */
-  }
-  
-  tfoot {
-    display: table-row-group; 
-  }
-  
-  tfoot td {
-    padding: 12px; 
-    border: 1px solid #333333; 
-  }
-  tfoot input{
-    width: 100%; 
-    padding: 8px; 
-    box-sizing: border-box; 
-    margin-bottom: 10px;
-  }
+    margin-top: 20px;
+}
 
-  .container {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 40px;
-    padding-right: 65px;
-    margin: 0 auto;
-    align-items: center;
-    width: 95%;
-    
-    
-  }
-  
-  
-  .input-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-  .input-container input {
-    width: 60%; /* Ajusta el ancho de los campos de entrada al 100% del ancho de la celda */
-    margin-bottom: 0px;
-    padding: 8px;
-    margin-right: 10px;
-    box-sizing: border-box;
-    
-  }
-  .productoCategoria{
-    
-    font-size: 20px;
-    padding-left: 60px;
-    
-    
-  }
+.productoCategoria{
+    height: 100%;
+}
 
-  .input-container button{
-    background-color: #606060;
-    color: #f9f9f9;
-    border-radius: 7px;
-  }
-  .input-container button:hover{
-    background-color: #333333;
-    color: #f9f9f9;
-  }
-
-  form {
+.container-form{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 30px;
-    margin-bottom: 50px;
-    padding: 20px;
-    border: 1px solid #333333;
-    border-radius: 10px;
-    background-color: #242424; /* Fondo de la caja del formulario en modo oscuro */
-    
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-    color: #f9f9f9; /* Color del texto en modo oscuro */
-    
-  }
-  input[type="number"] {
-    padding-top: 20px;
-    padding: 8px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #333333;
-    background-color: #212121; /* Fondo de los campos de entrada en modo oscuro */
-    color: #f9f9f9; /* Color del texto en modo oscuro */
-  }
-  
-  input[type="text"] {
-    width: 100%;
-    padding-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #333333;
-    background-color: #212121; /* Fondo de los campos de entrada en modo oscuro */
-    color: #f9f9f9; /* Color del texto en modo oscuro */
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #606060;
-    color: #f9f9f9;
-    border: none;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-left: 250px;
+    width: 60%;
+    background-color: #202020;
     border-radius: 7px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #333333;
-  }
-  
-  button:active {
-    background-color: #272727;
-  }
-  .selectId{
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #333333;
-    background-color: #212121; /* Fondo de los campos de entrada en modo oscuro */
-    color: #f9f9f9;
-    margin-right: 20px;
-    width: 100px;
-  }
-
-  /*Formulario de update*/
-  .actualizar{
-    font-size: 25px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-size: 20px;
+    
+}
+.container-form .h5{
     text-align: center;
-  }
-  .id{
-    width: 100%;
-    padding: 8px;
+    font-size: 25px;
+    margin-bottom: 19px;
+}
+label{
+    margin-left: 20px;
+}
+.c{
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #333333;
-    background-color: #212121; /* Fondo de los campos de entrada en modo oscuro */
-    color: #f9f9f9;
-  }
-  .smal{
-    font-size: 12px;
-    color: rgb(240, 38, 38);
-    margin-bottom: 15px;
-    text-align: left;
-    font-style: italic;
-    width: 98%;
-  }
+}
   
-  
+
 
 

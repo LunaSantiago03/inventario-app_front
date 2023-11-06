@@ -1,13 +1,11 @@
-
-
-<h3 class="presentacion">Lista de los productos</h3>
+<!-- Botones para filtrar -->
 <div class="button-container">
   <div class="bb">
     <button class="b1" (click)="getAvaible()">Disponibles</button>
     <button  class="b2" (click)="getAll()">Todos los productos</button>
   </div>
   <div class="va">
-    <button class="bv" (click)="getValoracion()">Por valoracion</button>
+    <!-- Seleccionar una valoracion-->
     <form class="custom" [formGroup]="productForm1" (ngSubmit)="getValoracion()">
       <select class="custom-select" type='Valoracion' id="valoracion1" formControlName="valoracion1" required>
         <option [value]="Valoracion.Bronce">Bronce</option>
@@ -15,35 +13,36 @@
         <option [value]="Valoracion.Oro">Oro</option>
       </select>
     </form>
+    <button class="bv" (click)="getValoracion()">Por valoracion</button>
   </div>
 </div>
+<!-- fin filtros -->
 
-<table id="table">
+
+<!-- tabla de productos -->
+<div class="container">
+<table class="table table-dark table-hover table table-striped table-bordered">
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Disponible</th>
-        <th>Valoración</th>
-        <th>Categorías</th>
+      <tr class="table-dark"  >
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Disponible</th>
+        <th scope="col">Valoración</th>
+        <th scope="col">Categorías</th>
         <th class="accion">Accion</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of productList">
-        <td>{{product.id}}</td>
+      <tr class="table-dark" *ngFor="let product of productList">
+        <td >{{product.id}}</td>
         <td>{{ product.nombre }}</td>
-        <td>{{ product.cantidad }}</td>
-        <td>{{ product.precio }}</td>
-        <td>
-          <span *ngIf="product.disponible === true">Si</span>
-          <span *ngIf="product.disponible === false">No</span>
-        </td>
-        
-        <td>{{ product.valoracion }}</td>
-        <td>
+        <td >{{ product.cantidad }}</td>
+        <td >{{ product.precio }}</td>
+        <td>{{ product.disponible === true ? 'Si' : 'No' }}</td>
+        <td >{{ product.valoracion }}</td>
+        <td >
           <ng-container *ngIf="product.categories && product.categories.length > 0; else noCategories">
             <span *ngFor="let category of product.categories; let isLast = last">
               {{ category.nombre }}{{ isLast ? '' : ', '}}
@@ -53,119 +52,169 @@
             No hay categorías
           </ng-template>
         </td>
-        <td class="boton"><button (click)="deleteProduct(product.id)">Eliminar</button></td>
+        <td class="boton"><button type="button" class="btn btn-outline-light" (click)="deleteProduct(product.id)">Eliminar</button></td>
       </tr>
     </tbody>  
 </table>
-
-
-<form class='for' [formGroup]="productForm" (ngSubmit)="save()">
-  <label for="nombre">Nombre:</label>
-  <input type="text" id="nombre" formControlName="nombre" [class.is-invalid]="nombreNo" placeholder="Porfavor ingrese nombre" required>
-  <small class="smal" *ngIf="productForm.get('nombre')?.invalid && productForm.get('nombre')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="cantidad">Cantidad:</label>
-  <input type="number" id="cantidad" formControlName="cantidad" placeholder="Ingrese la cantidad" required>
-  <small class="smal" *ngIf="productForm.get('cantidad')?.invalid && productForm.get('cantidad')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="precio">Precio:</label>
-  <input type="number" id="precio" formControlName="precio" placeholder="Ingrese el precio del producto" required>
-  <small class="smal" *ngIf="productForm.get('precio')?.invalid && productForm.get('precio')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="disponible">Disponible:</label>
-  <select class="form-select" formControlName="disponible" required>
-    <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-    <option [value]="'1'">Activo</option>
-    <option [value]="'0'">Inactivo</option>
-  </select>
-  <small class="smal" *ngIf="productForm.get('disponible')?.invalid && productForm.get('disponible')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="valoracion">Valoración:</label>
-  <select type='Valoracion' id="valoracion"  formControlName="valoracion" required>
-    <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-    <option [value]= Valoracion.Bronce >Bronce</option>
-  <option [value]=Valoracion.Platino>Platino</option>
-  <option [value]=Valoracion.Oro>Oro</option>
-  </select>
-  <small class="smal" *ngIf="productForm.get('valoracion')?.invalid && productForm.get('valoracion')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="categoria">Categoría:</label>
-  <select id="categoria" formControlName="categoria" required>
-    <ng-container *ngIf="productForm.get('categoria') as selectedCategory">
-    <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-    <option *ngFor="let category of categoryList" [value]="category.id" [selected]="selectedCategory.value === category.id" >
-      {{ category.nombre }}</option>
-  </ng-container>
-  </select>
-  <small class="smal" *ngIf="productForm.get('categoria')?.invalid && productForm.get('categoria')?.touched && productForm.invalid">Campo requerido*</small>
-  
-    <button type="submit">Guardar</button>
-</form>
-
-<h3 class="actualizar">Actualizar categoria</h3>
-<form class='actualizar1' [formGroup]="productUpdate" (ngSubmit)="checkFormCompletionU()">
-  <label for="id">ID:</label>
-  <select class="id" id="id" formControlName="id" required>
-    <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-    <option *ngFor="let product of productList" [value]="product.id">{{ product.id }}</option>
-  </select>
-  <small class="smal" *ngIf="productUpdate.get('id')?.invalid && productUpdate.get('id')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="nombre">Nombre:</label>
-  <input type="text" id="nombre" formControlName="nombre" [class.is-invalid]="nombreNo" placeholder="Porfavor ingrese nombre" required>
-  <small class="smal" *ngIf="productUpdate.get('nombre')?.invalid && productUpdate.get('nombre')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="cantidad">Cantidad:</label>
-  <input type="number" id="cantidad" formControlName="cantidad" placeholder="Ingrese la cantidad" required>
-  <small class="smal" *ngIf="productUpdate.get('cantidad')?.invalid && productUpdate.get('cantidad')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="precio">Precio:</label>
-  <input type="number" id="precio" formControlName="precio" placeholder="Ingrese el precio del producto" required>
-  <small class="smal" *ngIf="productUpdate.get('precio')?.invalid && productUpdate.get('precio')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="disponible">Disponible:</label>
-  <select class="form-select" formControlName="disponible" required>
-    <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-    <option [value]="'1'">Activo</option>
-    <option [value]="'0'">Inactivo</option>
-  </select>
-  <small class="smal" *ngIf="productUpdate.get('disponible')?.invalid && productUpdate.get('disponible')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="valoracion">Valoración:</label>
-  <select type='Valoracion' id="valoracion"  formControlName="valoracion" required>
-    <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-    <option [value]= Valoracion.Bronce >Bronce</option>
-  <option [value]=Valoracion.Platino>Platino</option>
-  <option [value]=Valoracion.Oro>Oro</option>
-  </select>
-  <small class="smal" *ngIf="productUpdate.get('valoracion')?.invalid && productUpdate.get('valoracion')?.touched && productForm.invalid">Campo requerido*</small>
-
-
-  <label for="categoria">Categoría:</label>
-  <select id="categoria" formControlName="categoria" required>
-    <ng-container *ngIf="productForm.get('categoria') as selectedCategory">
-      <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
-      <option *ngFor="let category of categoryList" [value]="category.id" [selected]="selectedCategory.value === category.id" >
-        {{ category.nombre }}</option>
-    </ng-container>
-  </select>
-  <small class="smal" *ngIf="productUpdate.get('categoria')?.invalid && productUpdate.get('categoria')?.touched && productForm.invalid">Campo requerido*</small>
-
-  <button type="submit">Guardar</button>
-</form>
-
-<div>
-  
 </div>
-  
-  
+<!-- fin tabla productos -->
+
+
+<div class="container-form">
+  <form class="mt-4 needs-validation" [formGroup]="productForm" (ngSubmit)="checkFormCompletion();" novalidate>
+    <h5 class="h5">Formulario de carga</h5>
+    <div class="row mt-3 mb-4">
+      <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+      <div class="col-8">
+        <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Porfavor ingrese nombre" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productForm.get('nombre')?.invalid && productForm.get('nombre')?.touched && productForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="cantidad" class="col-2 col-form-label">Cantidad:</label>
+      <div class="col-8">
+        <input class="form-control" type="number" id="cantidad" formControlName="cantidad" placeholder="Ingrese la cantidad" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productForm.get('cantidad')?.invalid && productForm.get('cantidad')?.touched && productForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="precio" class="col-2 col-form-label">Precio:</label>
+      <div class="col-8">
+        <input class="form-control" type="number" id="precio" formControlName="precio" placeholder="Ingrese el precio del producto" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productForm.get('precio')?.invalid && productForm.get('precio')?.touched && productForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="disponible" class="col-2 col-form-label">Disponible:</label>
+      <div class="col-8">
+        <select class="form-select" formControlName="disponible">
+          <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+          <option [value]="'1'">Activo</option>
+          <option [value]="'0'">Inactivo</option>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productForm.get('disponible')?.invalid && productForm.get('disponible')?.touched && productForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="valoracion" class="col-2 col-form-label">Valoración:</label>
+      <div class="col-8">
+        <select class="form-select" formControlName="valoracion">
+          <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+          <option [value]="'Bronce'">Bronce</option>
+          <option [value]="'Platino'">Platino</option>
+          <option [value]="'Oro'">Oro</option>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productForm.get('valoracion')?.invalid && productForm.get('valoracion')?.touched && productForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="categoria" class="col-2 col-form-label">Categoría:</label>
+      <div class="col-8">
+        <select class="form-select" formControlName="categoria">
+          <ng-container *ngIf="productForm.get('categoria') as selectedCategory">
+            <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+            <option *ngFor="let category of categoryList" [value]="category.id" [selected]="selectedCategory.value === category.id">
+              {{ category.nombre }}</option>
+          </ng-container>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productForm.get('categoria')?.invalid && productForm.get('categoria')?.touched && productForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+    <div class="c">
+      <button type="submit" class="btn btn-outline-light">Crear</button>
+    </div>
+
+  </form>
+</div>
+<!-- fin formulario crear -->
+
+<!-- Formulario de actualizacion -->
+<div class="container-form">
+  <form class="mt-4 needs-validation" [formGroup]="productForm" (ngSubmit)="checkFormCompletion();" novalidate>
+    <h5 class="h5">Formulario de actualizacion</h5>
+
+    <div class="row mt-3 mb-4">
+      <label for="id" class="col-2 col-form-label">ID:</label>
+      <div class="col-8">
+        <select class="form-select" id="id" formControlName="id" required>
+          <option *ngFor="let product of productList" [value]="product.id">{{ product.id }}</option>
+        </select>
+        <small class="smal" *ngIf="productUpdate.get('id')?.invalid && productUpdate.get('id')?.touched && productForm.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="nombre" class="col-2 col-form-label">Nombre:</label>
+      <div class="col-8">
+        <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Porfavor ingrese nombre" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productUpdate.get('nombre')?.invalid && productUpdate.get('nombre')?.touched && productUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="cantidad" class="col-2 col-form-label">Cantidad:</label>
+      <div class="col-8">
+        <input class="form-control" type="number" id="cantidad" formControlName="cantidad" placeholder="Ingrese la cantidad" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productUpdate.get('cantidad')?.invalid && productUpdate.get('cantidad')?.touched && productUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="precio" class="col-2 col-form-label">Precio:</label>
+      <div class="col-8">
+        <input class="form-control" type="number" id="precio" formControlName="precio" placeholder="Ingrese el precio del producto" required>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productUpdate.get('precio')?.invalid && productUpdate.get('precio')?.touched && productUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="disponible" class="col-2 col-form-label">Disponible:</label>
+      <div class="col-8">
+        <select class="form-select" formControlName="disponible">
+          <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+          <option [value]="'1'">Activo</option>
+          <option [value]="'0'">Inactivo</option>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productUpdate.get('disponible')?.invalid && productUpdate.get('disponible')?.touched && productUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="valoracion" class="col-2 col-form-label">Valoración:</label>
+      <div class="col-8">
+        <select class="form-select" formControlName="valoracion">
+          <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+          <option [value]="'Bronce'">Bronce</option>
+          <option [value]="'Platino'">Platino</option>
+          <option [value]="'Oro'">Oro</option>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productUpdate.get('valoracion')?.invalid && productUpdate.get('valoracion')?.touched && productUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <label for="categoria" class="col-2 col-form-label">Categoría:</label>
+      <div class="col-8">
+        <select class="form-select" formControlName="categoria">
+          <ng-container *ngIf="productForm.get('categoria') as selectedCategory">
+            <option [ngValue]="null" style="color: gray;">Seleccione una opción</option>
+            <option *ngFor="let category of categoryList" [value]="category.id" [selected]="selectedCategory.value === category.id">
+              {{ category.nombre }}</option>
+          </ng-container>
+        </select>
+        <small style="color: rgba(255, 0, 0, 0.589);" class="smal" *ngIf="productUpdate.get('categoria')?.invalid && productUpdate.get('categoria')?.touched && productUpdate.invalid">Campo requerido*</small>
+      </div>
+    </div>
+    <div class="c">
+      <button type="submit" class="btn btn-outline-light">Actualizar</button>
+    </div>
+
+  </form>
+</div>
+<!-- fin formulario actualizar -->
+

@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
-import { CategoryComponent } from '../category/category.component';
 import { CategoryService } from 'src/app/services/category.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Valoracion } from 'src/app/models/valoracion';
 
 @Component({
@@ -20,7 +18,6 @@ export class ProductComponent implements OnInit{
   productForm: FormGroup = new FormGroup({});
   productForm1: FormGroup = new FormGroup({});
   productUpdate: FormGroup = new FormGroup({});
-  update: boolean = false;
   Valoracion = Valoracion;
   submitted = false;
   submittedU = false;
@@ -194,7 +191,6 @@ export class ProductComponent implements OnInit{
       
     }
   }
-
 
   deleteProduct(id:number){
     this.productService.delete(id).subscribe (() =>{
